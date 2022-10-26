@@ -1,4 +1,4 @@
-#!/usr/local/jacl/bin/fcgijacl
+#!/usr/local/bin/fcgijacl
 #ifid:JACL-004
 #                                                               THE BLOODY GUNS
 # -----------------------------------------------------------------------------
@@ -325,6 +325,11 @@ move cricket_ball to here
 {insert_in_settingtool
 return "set_to_integer_cricket_ball"
 }
+
+# ADDING AN EXTRA GRAMMAR STATEMENT TO SUIT THE GAME SITUATION
+grammar set *present to $integer seconds           >set_to_integer
+grammar set *present to $integer tenths            >set_to_integer
+grammar set *present to $integer tenths of second  >set_to_integer
 
 {set_to_integer
 if settingtool isnt *held : script_stage > during_raid
@@ -817,11 +822,11 @@ print:
 }
 
 location gun_emplacement : vickers 3.7 anti-aircraft bloody guns gun emplacement
-   has            OUTDOORS KNOWN
+   has          OUTDOORS KNOWN
    short        the "gun emplacement"
    northwest    assembly_area
-   out            assembly_area
-   in            armoury
+   out          assembly_area
+   in           armoury
    south        armoury
 
 {look
@@ -1643,9 +1648,17 @@ object shell_casing : hot brass anti-aircraft shell casing
 
 object shell : brass anti-aircraft shell
    short        a "brass anti-aircraft shell"
-   long            "On the ground there is a brass anti-aircraft shell^"
-   mass            15
-   parent        smith
+   long         "On the ground there is a brass anti-aircraft shell^"
+   mass         15
+   parent       smith
+
+{insert_in_the_gun
+print:
+   It is Jenkins' job to load the shells into the anti-aircraft gun.
+   Once you have set the fuse to the number of seconds you want simply
+   give the shell to him.^
+.
+}
 
 {examine
 print:
@@ -1810,9 +1823,9 @@ endif
 set fuse(set_to) = 0
 }
 
-constant set_to            3
+constant set_to           3
 constant fired_not_set    4
-constant total_shots        5
+constant total_shots      5
 
 object fuse : fuse on shell ring rings holes felt gunpowder
    short            the "powder fuse"
